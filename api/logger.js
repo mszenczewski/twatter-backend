@@ -16,7 +16,7 @@ const daily_rotate_file_transport = new transports.DailyRotateFile
 });
 
 module.exports = createLogger({
-  level: argv.log,
+  level: process.argv.log,
   levels: { 
     ERROR: 0,
     WARN: 1,

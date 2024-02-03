@@ -8,13 +8,13 @@ const mongoose = require('mongoose');
 const User = mongoose.model('Users');
 
 /**
- * ADDUSER 
+ * ADDUSER
  * Adds user to database
  * JSON: { username:, password:, email: }
  */
-module.exports = async function(req, res) { 
+module.exports = async function(req, res) {
   logger.DEBUG('[ADDUSER] received: ' + JSON.stringify(req.body));
- 
+
   if (req.body.username === '') {
     logger.WARN('[ADDUSER] application rejected, no username entered');
     res.status(400).json({status: 'error', error: 'no username entered'});
@@ -43,7 +43,7 @@ module.exports = async function(req, res) {
   };
 
   const transporter = nodemailer.createTransport({
-    host: argv.mail,
+    host: process.argv.mail,
     port: 2525,
     secure: false,
     tls:{rejectUnauthorized: false}
@@ -85,6 +85,6 @@ module.exports = async function(req, res) {
       logger.INFO('[ADDUSER] email sent to ' + mail_options.to);
     }
   } catch (err) {
-      logger.ERROR('[ADDUSER] ' + err);
+    logger.ERROR('[ADDUSER] ' + err);
   }
 };
