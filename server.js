@@ -11,17 +11,14 @@ console.log(`[args] listening on port ${argv.port}`);
 console.log(`[args] using ${argv.mail} as mail server`);
 console.log(`[args] using ${argv.mongo} as mongo server`);
 
-var mongooseCache = require('mongoose-redis');
-var cache = mongooseCache(mongoose, "redis://localhost:6379");
-
 mongoose.Promise = global.Promise;
 
-const mongo_url = `mongodb://${argv.mongo}:27017/twatter-sharded`;
+const mongo_url = `mongodb://${argv.mongo}:27017/twatterdb`;
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect(mongo_url, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongo_url, {useNewUrlParser: true, useUnifiedTopology: true}).then();
 
 require('./api/models/item');
 require('./api/models/user');
