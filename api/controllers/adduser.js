@@ -1,18 +1,15 @@
 'use strict';
 
-const logger = require('../logger');
-
-const nodemailer = require('nodemailer');
-
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+import nodemailer from 'nodemailer';
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * ADDUSER
  * Adds user to database
  * JSON: { username:, password:, email: }
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[ADDUSER] received: ' + JSON.stringify(req.body));
 
   if (req.body.username === '') {

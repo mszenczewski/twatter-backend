@@ -1,9 +1,9 @@
 'use strict';
 
-const { createLogger, format, transports } = require('winston');
-const filesystem = require('fs');
+import filesystem from 'fs';
+import { createLogger, format, transports } from 'winston';
 const log_dir = 'log';
-require('winston-daily-rotate-file');
+import 'winston-daily-rotate-file';
 
 if (!filesystem.existsSync(log_dir)) {
   filesystem.mkdirSync(log_dir);
@@ -15,7 +15,7 @@ const daily_rotate_file_transport = new transports.DailyRotateFile
   datePattern: 'YYYY-MM-DD'
 });
 
-module.exports = createLogger({
+export default createLogger({
   level: process.argv.log,
   levels: { 
     ERROR: 0,

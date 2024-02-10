@@ -1,6 +1,7 @@
 'use strict';
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const MediaSchema = new Schema({
   id: {
@@ -21,6 +22,4 @@ const MediaSchema = new Schema({
   },
 }, {shardKey: {id: 1}});
 
-// MediaSchema.index( {id: 'text'} );
-
-module.exports = mongoose.model('Media', MediaSchema);
+export default mongoose.model('Media', MediaSchema);

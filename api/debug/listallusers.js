@@ -1,14 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  User = mongoose.model('Users');
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * LIST ALL USERS 
  * Returns all users in the database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   try {
     const results = await User.find({});
     res.json(results);

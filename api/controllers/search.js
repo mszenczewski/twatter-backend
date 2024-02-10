@@ -1,17 +1,15 @@
 'use strict';
 
-const logger = require('../logger');
-
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
-const Item = mongoose.model('Items');
+import Item from '../models/item.js';
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * SEARCH
  * Searches the database for 'tweets'
  * JSON: {timestamp:, limit:, q:, username:, following:} 
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[SEARCH] received: ' + JSON.stringify(req.body, null, 2));
 
   const options = {};

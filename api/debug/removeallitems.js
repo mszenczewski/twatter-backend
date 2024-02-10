@@ -1,14 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Item = mongoose.model('Items');
+import Item from '../models/item.js';
+import logger from '../logger.js';
 
 /**
  * REMOVE ALL ITEMS 
  * Removes all 'tweets' from database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   try {
     await Item.deleteMany({});
     logger.INFO('[REMOVEALLITEMS] all items removed');

@@ -1,14 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  User = mongoose.model('Users');
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * REMOVE ALL USERS 
  * Removes all users from database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   try {
     await User.deleteMany({});
     logger.INFO('[REMOVEALLUSERS] all users removed');

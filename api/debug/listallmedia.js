@@ -1,18 +1,17 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Media = mongoose.model('Media');
+import Media from '../models/media.js';
+import logger from '../logger.js';
 
 /**
  * LIST ALL MEDIA 
  * Returns all media in the database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   try {
     const results = await Media.find({});
 
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       results[i].content.data = null;
     }
 

@@ -1,15 +1,14 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  User = mongoose.model('Users'),
-  Item = mongoose.model('Items');
+import Item from '../models/item.js';
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * LIKE
  * Like an item based on ID
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[LIKE] received: ' + JSON.stringify(req.params) + ' ' + JSON.stringify(req.body));
 
   if (!req.session || !req.session.user) {

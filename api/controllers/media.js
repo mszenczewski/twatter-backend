@@ -1,14 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Media = mongoose.model('Media');
+import Media from '../models/media.js';
+import logger from '../logger.js';
 
 /**
  * MEDIA
  * Retrieves a media based on ID
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[MEDIA] received: ' + JSON.stringify(req.params));
 
   try {

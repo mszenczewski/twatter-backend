@@ -1,12 +1,12 @@
 'use strict';
 
-const logger = require('../logger');
+import logger from '../logger.js';
 
 /**
  * LOGOUT
  * Logs user out
  */
-module.exports = function(req, res) {
+export default function(req, res) {
   logger.DEBUG('[LOGOUT] received: ' + JSON.stringify(req.body));
 
   if (!req.session || !req.session.user) {

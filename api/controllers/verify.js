@@ -1,16 +1,14 @@
 'use strict';
 
-const logger = require('../logger');
-
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * VERIFY USER 
  * Verifies email with randomly generated key
  * JSON: { email:, key: }
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[VERIFY] received: ' + JSON.stringify(req.body));
 
   if (req.body.email === '') {

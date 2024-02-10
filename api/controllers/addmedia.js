@@ -1,16 +1,15 @@
 'use strict';
 
-const logger = require('../logger');
-const formidable = require('formidable');
-const fs = require('fs');
-const mongoose = require('mongoose'),
-  Media = mongoose.model('Media');
+import Media from '../models/media.js';
+import logger from '../logger.js';
+import formidable from 'formidable';
+import fs from 'fs';
 
 /**
  * ADD MEDIA
  * Adds media to the database
  */
-module.exports = function(req, res) {
+export default function(req, res) {
   if (!req.session || !req.session.user) {
     logger.WARN('[ADDMEDIA] user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});

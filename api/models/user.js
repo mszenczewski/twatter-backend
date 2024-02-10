@@ -1,6 +1,7 @@
 'use strict';
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   username: {
@@ -39,8 +40,4 @@ const UserSchema = new Schema({
   }
 }, {shardKey: {username: 1}});
 
-// UserSchema.index( {id: 'username'} );
-
-// UserSchema.index( { email: 'text'} );
-
-module.exports = mongoose.model('Users', UserSchema);
+export default mongoose.model('Users', UserSchema);

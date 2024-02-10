@@ -1,12 +1,12 @@
 'use strict';
 
-const logger = require('../logger');
+import logger from '../logger.js';
 
 /**
  * LOGGEDIN
  * Returns true if the user is logged in
  */
-module.exports = function(req, res) {
+export default function(req, res) {
   logger.DEBUG('[LOGGEDIN] received: ' + JSON.stringify(req.body));
   
   if (req.session && req.session.user) {

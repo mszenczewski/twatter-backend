@@ -1,16 +1,14 @@
 'use strict';
 
-const logger = require('../logger');
-
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /**
  * FOLLOW
  * Follows another user
  * JSON: {username:, follow: } 
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[FOLLOW] received: ' + JSON.stringify(req.body, null, 2));
 
   if (req.body.username === '') {

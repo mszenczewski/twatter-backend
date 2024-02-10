@@ -1,10 +1,15 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
-const session = require('client-sessions');
-const bodyParser = require('body-parser');
+import express from 'express';
+import mongoose from 'mongoose';
+import session from 'client-sessions';
+import bodyParser from 'body-parser';
+import minimist from 'minimist';
+import router from './api/routes.js';
+import './api/models/item.js'
+import './api/models/user.js'
+import './api/models/media.js'
 
 const argv = validate_argv();
+const app = express();
 
 console.log(`[args] logging in ${argv.log} mode`);
 console.log(`[args] listening on port ${argv.port}`);
@@ -20,10 +25,6 @@ mongoose.set('useCreateIndex', true);
 
 mongoose.connect(mongo_url, {useNewUrlParser: true, useUnifiedTopology: true}).then();
 
-require('./api/models/item');
-require('./api/models/user');
-require('./api/models/media');
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -34,13 +35,12 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
 }));
 
-const routes = require('./api/routes');
-routes(app);
+router(app);
 
 app.listen(argv.port);
 
 function validate_argv() {
-  const argv = require('minimist')(process.argv.slice(2));
+  const argv = minimist(process.argv.slice(2));
   switch(argv.log) {
     case 'ERROR':
     case 'WARN':

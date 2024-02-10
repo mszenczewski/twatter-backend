@@ -1,16 +1,15 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Item = mongoose.model('Items'),
-  Media = mongoose.model('Media');
+import Item from '../models/item.js';
+import Media from '../models/media.js';
+import logger from '../logger.js';
 
 /**
  * ADD ITEM
  * Adds a 'tweet' to the database
  * JSON: {content: childType: parent: media:} 
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('     ');
   logger.DEBUG('[ADDITEM] received: ' + JSON.stringify(req.body, null, 2));
 

@@ -1,15 +1,14 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Item = mongoose.model('Items'),
-  Media = mongoose.model('Media');
+import Item from '../models/item.js';
+import Media from '../models/media.js';
+import logger from '../logger.js';
 
 /**
  * DELETE 
  * Removes a 'tweet' from database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[DELETE] received: ' + JSON.stringify(req.params));
 
   if (!req.session || !req.session.user) {

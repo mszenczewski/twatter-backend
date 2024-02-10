@@ -1,14 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-const mongoose = require('mongoose'),
-  Item = mongoose.model('Items');
+import Item from '../models/item.js';
+import logger from '../logger.js';
 
 /**
  * LIST ALL ITEMS 
  * Returns all 'tweets' in the database
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   try {
     const results = await Item.find({});
     res.json(results);

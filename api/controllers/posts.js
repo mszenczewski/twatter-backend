@@ -1,15 +1,13 @@
 'use strict';
 
-const logger = require('../logger');
-
-const mongoose = require('mongoose');
-const Item = mongoose.model('Items');
+import Item from '../models/item.js';
+import logger from '../logger.js';
 
 /**
  * POSTS
  * Retrieves posts based on username
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[POSTS] received: ' + JSON.stringify(req.params, null, 2));
   logger.DEBUG('[POSTS] received: ' + JSON.stringify(req.query, null, 2));
 

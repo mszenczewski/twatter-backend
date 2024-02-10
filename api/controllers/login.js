@@ -1,16 +1,14 @@
 'use strict';
 
-const logger = require('../logger');
-
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+import User from '../models/user.js';
+import logger from '../logger.js';
 
 /** 
  * LOGIN 
  * Logs user in
  * JSON: { username:, password: }
  */
-module.exports = async function(req, res) {
+export default async function(req, res) {
   logger.DEBUG('[LOGIN] received: ' + JSON.stringify(req.body));
 
   if (req.body.username === '') {

@@ -1,6 +1,7 @@
 'use strict';
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
   id: {
@@ -34,4 +35,4 @@ const ItemSchema = new Schema({
 
 ItemSchema.index( { content: 'text' , id: 'text'} );
 
-module.exports = mongoose.model('Items', ItemSchema);
+export default mongoose.model('Items', ItemSchema);
