@@ -19,10 +19,7 @@ mongoose.Promise = global.Promise;
 
 const mongo_url = `mongodb://${argv.mongo}:27017/twatterdb`;
 
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-
-mongoose.connect(mongo_url, {useNewUrlParser: true, useUnifiedTopology: true}).then();
+mongoose.connect(mongo_url).then();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
