@@ -1,22 +1,26 @@
 'use strict';
 
-import filesystem from 'fs';
+import fs from 'fs';
 import { createLogger, format, transports } from 'winston';
-const log_dir = 'log';
 import 'winston-daily-rotate-file';
+import validate_argv from '../validate_argv.js';
 
-if (!filesystem.existsSync(log_dir)) {
-  filesystem.mkdirSync(log_dir);
+const LOG_DIR = 'log';
+
+if (!fs.existsSync(LOG_DIR)) {
+  fs.mkdirSync(LOG_DIR);
 }
 
-const daily_rotate_file_transport = new transports.DailyRotateFile
+const DAILY_ROTATE_FILE_TRANSPORT = new transports.DailyRotateFile
 ({
-  filename: `${log_dir}/%DATE%-results.log`,
+  filename: `${LOG_DIR}/%DATE%-results.log`,
   datePattern: 'YYYY-MM-DD'
 });
 
+const ARGS = validate_argv();
+
 export default createLogger({
-  level: process.argv.log,
+  level: ARGS.log,
   levels: { 
     ERROR: 0,
     WARN: 1,
@@ -34,6 +38,6 @@ export default createLogger({
         format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
       ),
     }),
-    daily_rotate_file_transport
+    DAILY_ROTATE_FILE_TRANSPORT
   ]
 });
