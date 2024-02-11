@@ -1,7 +1,9 @@
 'use strict';
 
 import User from '../models/user.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('follow');
 
 /**
  * FOLLOW
@@ -9,22 +11,22 @@ import logger from '../logger.js';
  * JSON: {username:, follow: } 
  */
 export default async function(req, res) {
-  logger.debug('[FOLLOW] received: ' + JSON.stringify(req.body, null, 2));
+  logger.debug('received: ' + JSON.stringify(req.body, null, 2));
 
   if (req.body.username === '') {
-    logger.warn('[FOLLOW] request rejected, no username entered');
+    logger.warn('request rejected, no username entered');
     res.status(400).json({status: 'error', error: 'no username entered'});
     return;
   }
 
   if (req.body.follow !== true && req.body.follow !== false) {
-    logger.warn('[FOLLOW] request rejected, no follow entered');
+    logger.warn('request rejected, no follow entered');
     res.status(400).json({status: 'error', error: 'no follow entered'});
     return;
   }
 
   if (!req.session || !req.session.user) {
-    logger.warn('[FOLLOW] user not logged in');
+    logger.warn('user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});
     return;
   }
@@ -33,19 +35,19 @@ export default async function(req, res) {
     const target = await User.findOne({'username': req.body.username}, {username : 1, followers : 1});
 
     if (target === null) {
-      logger.warn('[FOLLOW] could not find user');
+      logger.warn('could not find user');
       res.status(404).json({status: 'error', error: 'could not find user'});
       return;
     }
 
     if (req.body.follow && target.followers.indexOf(req.session.user) !== -1) {
-      logger.warn('[FOLLOW] already follow user');
+      logger.warn('already follow user');
       res.status(400).json({status: 'error', error: 'already follow user'});
       return;
     }
 
     if (!req.body.follow && target.followers.indexOf(req.session.user) === -1) {
-      logger.warn('[FOLLOW] not following user');
+      logger.warn('not following user');
       res.status(400).json({status: 'error', error: 'not following user'});
       return;
     }
@@ -55,26 +57,26 @@ export default async function(req, res) {
     if (req.body.follow) {
       target.followers.push(req.session.user);
       await target.save();
-      logger.info(`[FOLLOW] added ${req.session.user} to ${target.username}'s follower list`);
+      logger.info(`added ${req.session.user} to ${target.username}'s follower list`);
 
       me.following.push(target.username);
       await me.save();
-      logger.info(`[FOLLOW] added ${target.username} to ${me.username}'s following list`);
+      logger.info(`added ${target.username} to ${me.username}'s following list`);
 
       res.status(200).json({status: 'OK'});
     } else {
       target.followers.splice(target.followers.indexOf(req.session.user), 1);
       await target.save();
-      logger.info(`[FOLLOW] removed ${req.session.user} from ${target.username}'s follower list`);
+      logger.info(`removed ${req.session.user} from ${target.username}'s follower list`);
 
       me.following.splice(me.following.indexOf(target.username), 1);
       await me.save();
-      logger.info(`[FOLLOW] removed ${target.username} from ${me.username}'s following list`);
+      logger.info(`removed ${target.username} from ${me.username}'s following list`);
 
       res.status(200).json({status: 'OK'});
     }
   } catch (err) {
-    logger.error('[FOLLOW] ' + err);
+    logger.error(err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

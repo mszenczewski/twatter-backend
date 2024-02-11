@@ -2,7 +2,9 @@
 
 import Item from '../models/item.js';
 import Media from '../models/media.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('additem');
 
 /**
  * ADD ITEM
@@ -10,17 +12,16 @@ import logger from '../logger.js';
  * JSON: {content: childType: parent: media:} 
  */
 export default async function(req, res) {
-  logger.debug('     ');
-  logger.debug('[ADDITEM] received: ' + JSON.stringify(req.body, null, 2));
+  logger.debug('received: ' + JSON.stringify(req.body, null, 2));
 
   if (!req.session || !req.session.user) {
-    logger.warn('[ADDITEM] user not logged in');
+    logger.warn('user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});
     return;
   }
 
   if (!req.body.content) { 
-    logger.warn('[ADDITEM] no content');
+    logger.warn('no content');
     res.status(400).json({status: 'error', error: 'no content'});
     return;
   }
@@ -28,11 +29,11 @@ export default async function(req, res) {
   if (req.body.childType === 'retweet') {
     try {
       await Item.findOneAndUpdate({id: req.body.parent}, {$inc: {'retweeted': 1}});
-      logger.info(`[ADDITEM] ${req.body.parent} retweeted by ${req.session.user}`);
+      logger.info(`${req.body.parent} retweeted by ${req.session.user}`);
       res.status(200).json({status: 'OK'});
       return;
     } catch (err) {
-      logger.error('[ADDITEM] ' + err);
+      logger.error(err);
       res.status(500).json({status: 'error', error: 'fatal'});
       return;
     }
@@ -46,18 +47,18 @@ export default async function(req, res) {
 
       for (let i = 0; i < results.length; i++) {
         if (results[i].by.tweetid !== null) {
-          logger.warn('[ADDITEM] media already has a tweet associated with it');
+          logger.warn('media already has a tweet associated with it');
           res.status(403).json({status: 'error', error: 'media already has a tweet associated with it'});
           return;
         } 
         if (results[i].by.username !== req.session.user) {
-          logger.warn('[ADDITEM] media does not belong to user');
+          logger.warn('media does not belong to user');
           res.status(403).json({status: 'error', error: 'media does not belong to user'});
           return;
         } 
       }
     } catch (err) {
-      logger.error('[ADDITEM] ' + err);
+      logger.error(err);
       res.status(500).json({status: 'error', error: 'fatal'});
       return;
     }
@@ -91,9 +92,9 @@ export default async function(req, res) {
     }
 
     res.status(200).json({status: 'OK', id: temp.id}); 
-    logger.info('[ADDITEM] item ' + item.id + ' added');
+    logger.info(`item ${item.id} added`);
   } catch (err) {
-    logger.error('[ADDITEM] ' + err);
+    logger.error(err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

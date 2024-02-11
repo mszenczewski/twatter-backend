@@ -1,9 +1,11 @@
 'use strict';
 
 import Media from '../models/media.js';
-import logger from '../logger.js';
 import formidable from 'formidable';
 import fs from 'fs';
+import logger_child from '../logger.js';
+
+const logger = logger_child('addmedia');
 
 /**
  * ADD MEDIA
@@ -11,7 +13,7 @@ import fs from 'fs';
  */
 export default function(req, res) {
   if (!req.session || !req.session.user) {
-    logger.warn('[ADDMEDIA] user not logged in');
+    logger.warn('user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});
     return;
   }
@@ -19,11 +21,11 @@ export default function(req, res) {
   const form = new formidable.IncomingForm(); 
   form.parse(req, async function (err, fields, files) {
     if (err) {
-      logger.error('[ADDMEDIA] ' + err);
+      logger.error(err);
       return;
     }
 
-    logger.debug('[ADDMEDIA] files: ' + JSON.stringify(files, null, 2));
+    logger.debug('files: ' + JSON.stringify(files, null, 2));
 
     const media = new Media();
 
@@ -44,9 +46,9 @@ export default function(req, res) {
     try {
       await media.save();
       fs.unlinkSync(files.content.path);
-      logger.info('[ADDMEDIA] media ' + media.id + ' added');
+      logger.info(`media ${media.id} added`);
     } catch (err) {
-      logger.error('[ADDMEDIA] ' + err); 
+      logger.error(err);
     }
   });
 };

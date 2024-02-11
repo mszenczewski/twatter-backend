@@ -1,7 +1,9 @@
 'use strict';
 
 import Item from '../models/item.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('removeallitems');
 
 /**
  * REMOVE ALL ITEMS 
@@ -10,10 +12,10 @@ import logger from '../logger.js';
 export default async function(req, res) {
   try {
     await Item.deleteMany({});
-    logger.info('[REMOVEALLITEMS] all items removed');
+    logger.info('all items removed');
     res.json({status: 'OK'});
   } catch (err) {
-    logger.error('[REMOVEALLITEMS] ' + err);
+    logger.error(err);
     res.json({status: 'error'});
   }
 };

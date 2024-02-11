@@ -1,20 +1,22 @@
 'use strict';
 
 import Item from '../models/item.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('item');
 
 /**
  * ITEM
  * Retrieves and item based on ID
  */
 export default async function(req, res) {
-  logger.debug('[ITEM] received: ' + JSON.stringify(req.params));
+  logger.debug('received: ' + JSON.stringify(req.params));
 
   try {
     const item = await Item.findOne({'id': req.params.id});
 
     if (item === null) {
-      logger.warn('[ITEM] item not found');
+      logger.warn('item not found');
       res.status(404).json({status: 'error', error: 'item not found'});
       return;
     }
@@ -33,11 +35,11 @@ export default async function(req, res) {
         }
     };
 
-    logger.info('[ITEM] ' + item.id + ' found');
+    logger.info(`${item.id} found`);
     res.status(200).send(json);
 
   } catch (err) {
-    logger.error('[ITEM] ' + err);
+    logger.error(err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

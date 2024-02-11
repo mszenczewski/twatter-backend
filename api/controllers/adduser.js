@@ -2,10 +2,11 @@
 
 import nodemailer from 'nodemailer';
 import User from '../models/user.js';
-import logger from '../logger.js';
 import validate_argv from "../../validate_argv.js";
+import logger_child from '../logger.js';
 
 const argv = validate_argv();
+const logger = logger_child('adduser');
 
 /**
  * ADDUSER
@@ -13,22 +14,22 @@ const argv = validate_argv();
  * JSON: { username:, password:, email: }
  */
 export default async function(req, res) {
-  logger.debug('[ADDUSER] received: ' + JSON.stringify(req.body));
+  logger.debug('received: ' + JSON.stringify(req.body));
 
   if (req.body.username === '') {
-    logger.warn('[ADDUSER] application rejected, no username entered');
+    logger.warn('application rejected, no username entered');
     res.status(400).json({status: 'error', error: 'no username entered'});
     return;
   }
 
   if (req.body.password === '') {
-    logger.warn('[ADDUSER] application rejected, no password entered');
+    logger.warn('application rejected, no password entered');
     res.status(400).json({status: 'error', error: 'no password entered'});
     return;
   }
 
   if (req.body.email === '') {
-    logger.warn('[ADDUSER] application rejected, no email entered');
+    logger.warn('application rejected, no email entered');
     res.status(400).json({status: 'error', error: 'no email entered'});
     return;
   }
@@ -54,7 +55,7 @@ export default async function(req, res) {
     const u = await User.findOne({'username': req.body.username}, {username : 1});
 
     if (u !== null) {
-      logger.warn('[ADDUSER] user already exists');
+      logger.warn('user already exists');
       res.status(400).json({status: 'error', error: 'user already exists'});
       return;
     }
@@ -68,8 +69,8 @@ export default async function(req, res) {
 
     await user.save();
 
-    logger.info('[ADDUSER] added ' + req.body.username + ' to database');
-    logger.debug('[ADDUSER] user: ' + JSON.stringify(user, null, 2));
+    logger.info(`added ${req.body.username} to database`);
+    logger.debug('user: ' + JSON.stringify(user, null, 2));
 
     res.status(200).json({status: 'OK'});
 
@@ -80,11 +81,11 @@ export default async function(req, res) {
     const code = tmp[0];
 
     if (code.charAt(0) != 2 ) {
-      logger.error('[ADDUSER] ' + JSON.stringify(info, null, 2));
+      logger.error(JSON.stringify(info, null, 2));
     } else {
-      logger.info('[ADDUSER] email sent to ' + mail_options.to);
+      logger.info('email sent to ' + mail_options.to);
     }
   } catch (err) {
-    logger.error('[ADDUSER] ' + err);
+    logger.error(err);
   }
 };

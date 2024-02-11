@@ -1,7 +1,9 @@
 'use strict';
 
 import User from '../models/user.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('login');
 
 /** 
  * LOGIN 
@@ -9,16 +11,16 @@ import logger from '../logger.js';
  * JSON: { username:, password: }
  */
 export default async function(req, res) {
-  logger.debug('[LOGIN] received: ' + JSON.stringify(req.body));
+  logger.debug('received: ' + JSON.stringify(req.body));
 
   if (req.body.username === '') {
-    logger.warn('[LOGIN] no username entered');
+    logger.warn('no username entered');
     res.status(400).json({status: 'error', error: 'no username entered'});
     return;
   }
 
   if (req.body.password === '') {
-    logger.warn('[LOGIN] no password entered');
+    logger.warn('no password entered');
     res.status(400).json({status: 'error', error: 'no password entered'});
     return;
   }
@@ -27,22 +29,22 @@ export default async function(req, res) {
     const user = await User.findOne({'username': req.body.username, 'password': req.body.password}, {username : 1, verified : 1});
 
     if (user === null) {
-      logger.warn('[LOGIN] incorrect login attempt');
+      logger.warn('incorrect login attempt');
       res.status(403).json({status: 'error', error: 'incorrect login'});
       return;
     }
 
     if (user.verified != true) {
-      logger.warn('[LOGIN] user not verified');
+      logger.warn('user not verified');
       res.status(403).json({status: 'error', error: 'user not verified'});
       return;
     }
 
-    logger.info('[LOGIN] ' + user.username + ' logged in');
+    logger.info(user.username + ' logged in');
     req.session.user = user.username;
     res.json({status: 'OK'});
   } catch (err) {
-    logger.error('[LOGIN] ' + err);
+    logger.error(err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

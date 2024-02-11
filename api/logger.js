@@ -19,25 +19,32 @@ const daily_rotate_file_transport = new transports.DailyRotateFile
 
 const argv = validate_argv();
 
-export default createLogger({
+const logger = createLogger({
   level: argv.log,
-  levels: { 
+  levels: {
     error: 0,
     warn: 1,
     info: 2,
     debug: 3
   },
   format: format.combine(
-    format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
-    format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+      format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+      format.printf(x => `${x.timestamp} ${x.level.toUpperCase()}: [${x.label.toUpperCase()}] ${x.message}`)
   ),
   transports: [
     new transports.Console({
       format: format.combine(
-        format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
-        format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+          format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
+          format.printf(x => `${x.timestamp} ${x.level.toUpperCase()}: [${x.label.toUpperCase()}] ${x.message}`)
       ),
     }),
     daily_rotate_file_transport
   ]
 });
+
+export default function logger_child(label){
+  return logger.child({label: label});
+}
+
+
+

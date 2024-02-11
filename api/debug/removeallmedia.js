@@ -1,7 +1,9 @@
 'use strict';
 
 import Media from '../models/media.js';
-import logger from '../logger.js';
+import logger_child from '../logger.js';
+
+const logger = logger_child('removeallmedia');
 
 /**
  * REMOVE ALL MEDIA 
@@ -10,10 +12,10 @@ import logger from '../logger.js';
 export default async function(req, res) {
   try {
     await Media.deleteMany({});
-    logger.info('[REMOVEALLMEDIA] all media removed');
+    logger.info('all media removed');
     res.json({status: 'OK'});
   } catch (err) {
-    logger.error('[REMOVEALLMEDIA] ' + err);
+    logger.error(err);
     res.json({status: 'error'});
   }
 };
