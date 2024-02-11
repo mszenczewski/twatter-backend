@@ -16,7 +16,7 @@ export default function validate_argv() {
       process.argv.log='error';
   }
 
-  process.argv.port = isNaN((argv.port)) ? 8080 : argv.port;
+  process.argv.port = isNaN(argv.port) ? 8080 : argv.port;
   process.argv.mail = !argv.mail ? 'localhost' : argv.mail;
   process.argv.mongo = !argv.mongo ? 'localhost' : argv.mongo;
 
