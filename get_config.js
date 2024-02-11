@@ -3,30 +3,21 @@
 import config from 'config';
 
 export default function get_config() {
-  const port = config.get('port');
-  const log_level = config.get('log_level');
-  const mongo_url = config.get('mongodb.url');
-  const mongo_port = config.get('mongodb.port');
-  const mongo_name = config.get('mongodb.name');
-  const postfix_url = config.get('postfix.url');
-  const postfix_port = config.get('postfix.port');
-
   const cfg = {
-    "port": port,
-    "log_level": log_level,
+    "port": config.get('port'),
+    "log_level": config.get('log_level'),
     "mongodb": {
-      "url": mongo_url,
-      "port": mongo_port,
-      "name": mongo_name
+      "url": config.get('mongodb.url'),
+      "port": config.get('mongodb.port'),
+      "name": config.get('mongodb.name')
     },
     "postfix": {
-      "url": postfix_url,
-      "port": postfix_port
+      "url": config.get('postfix.url'),
+      "port": config.get('postfix.port')
     }
   }
 
   validate_config(cfg);
-
   return cfg;
 }
 
@@ -34,15 +25,31 @@ function validate_config(cfg) {
   cfg.port = valid_port(cfg.port, 8080);
   cfg.mongodb.port = valid_port(cfg.mongodb.port, 27017);
   cfg.postfix.port = valid_port(cfg.postfix.port, 2525);
-  cfg.log_level = valid_level(cfg.log_level, 'debug')
+  cfg.log_level = valid_level(cfg.log_level, 'debug');
+  cfg.postfix.url = valid_url(cfg.postfix.url, 'localhost');
+  cfg.mongodb.url = valid_url(cfg.mongodb.url, 'localhost');
 }
 
-function valid_port(port, default_port) {
-  if (isNaN(Number(port))) return default_port;
+function valid_port(port, safe) {
+  if (isNaN(Number(port))) return safe;
   return port;
 }
 
-function valid_level(level, default_level) {
+function valid_url(url, safe) {
+  if (url === 'localhost') return url;
+
+  const pieces = url.split('.');
+  if (pieces.length !== 4) return safe;
+
+  for (const i in pieces) {
+    const n = Number(pieces[i]);
+    if (isNaN(n) || n < 0 || n > 255) return safe;
+  }
+
+  return url;
+}
+
+function valid_level(level, safe) {
   switch(level) {
     case 'error':
     case 'warn':
@@ -50,6 +57,6 @@ function valid_level(level, default_level) {
     case 'debug':
       return level;
     default:
-      return default_level;
+      return safe;
   }
 }
