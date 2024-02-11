@@ -24,14 +24,14 @@ import follow from './controllers/follow.js';
 import loggedin from './controllers/loggedin.js';
 import like from './controllers/like.js';
 
-//DEBUGGING
-import listallitems from './debug/listallitems.js';
-import listallmedia from './debug/listallmedia.js';
-import listallusers from './debug/listallusers.js';
-import removeallitems from './debug/removeallitems.js';
-import removeallmedia from './debug/removeallmedia.js';
-import removeallusers from './debug/removeallusers.js';
-import reset from './debug/reset.js';
+//ADMIN
+import listallitems from './admin/listallitems.js';
+import listallmedia from './admin/listallmedia.js';
+import listallusers from './admin/listallusers.js';
+import removeallitems from './admin/removeallitems.js';
+import removeallmedia from './admin/removeallmedia.js';
+import removeallusers from './admin/removeallusers.js';
+import reset from './admin/reset.js';
 
 export default function router(app) {
     //GET
@@ -58,7 +58,7 @@ export default function router(app) {
     app.route('/loggedin').post(loggedin);
     app.route('/item/:id/like').post(like);
 
-    //DEBUGGING
+    //ADMIN
     app.route('/listallitems').post(listallitems);
     app.route('/listallusers').post(listallusers);
     app.route('/listallmedia').post(listallmedia);
