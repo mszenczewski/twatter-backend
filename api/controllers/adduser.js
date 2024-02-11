@@ -2,10 +2,10 @@
 
 import nodemailer from 'nodemailer';
 import User from '../models/user.js';
-import validate_argv from "../../validate_argv.js";
+import get_config from "../../get_config.js";
 import logger_child from '../logger.js';
 
-const argv = validate_argv();
+const cfg = get_config();
 const logger = logger_child('adduser');
 
 /**
@@ -44,8 +44,8 @@ export default async function(req, res) {
   };
 
   const transporter = nodemailer.createTransport({
-    host: argv.mail,
-    port: 2525,
+    host: cfg.postfix.url,
+    port: cfg.postfix.port,
     secure: false,
     tls:{rejectUnauthorized: false}
   });

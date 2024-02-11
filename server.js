@@ -5,18 +5,20 @@ import mongoose from 'mongoose';
 import session from 'client-sessions';
 import bodyParser from 'body-parser';
 import router from './api/router.js';
-import validate_argv from './validate_argv.js';
+import get_config from './get_config.js';
 
-const argv = validate_argv();
+const cfg = get_config();
 
-console.log(`[args] logging in ${argv.log} mode`);
-console.log(`[args] listening on port ${argv.port}`);
-console.log(`[args] using ${argv.mail} as mail server`);
-console.log(`[args] using ${argv.mongo} as mongo server`);
+const mongo_url = `${cfg.mongodb.url}:${cfg.mongodb.port}/${cfg.mongodb.name}`;
+const postfix_url = `${cfg.postfix.url}:${cfg.postfix.port}`;
+
+console.log(`[args] logging in ${cfg.log_level} mode`);
+console.log(`[args] listening on port ${cfg.port}`);
+console.log(`[args] using ${mongo_url} as mongodb server`);
+console.log(`[args] using ${postfix_url} as postfix server`);
 
 mongoose.Promise = global.Promise;
-const mongo_url = `mongodb://${argv.mongo}:27017/twatterdb`;
-mongoose.connect(mongo_url).then();
+mongoose.connect(`mongodb://${mongo_url}`).then();
 
 const app = express();
 
@@ -30,6 +32,6 @@ app.use(session({
 }));
 
 router(app);
-app.listen(argv.port);
+app.listen(cfg.port);
 
 export default app;

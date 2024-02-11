@@ -1,0 +1,13 @@
+{
+  "port": 8080,
+  "log_level": "poop",
+  "mongodb": {
+    "url": "localhost",
+    "port": 27017,
+    "name": "twatter"
+  },
+  "postfix": {
+    "url": "localhost",
+    "port": 2525
+  }
+}

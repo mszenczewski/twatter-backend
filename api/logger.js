@@ -3,7 +3,7 @@
 import fs from 'fs';
 import { createLogger, format, transports } from 'winston';
 import 'winston-daily-rotate-file';
-import validate_argv from '../validate_argv.js';
+import get_config from '../get_config.js';
 
 const log_dir = 'log';
 
@@ -17,10 +17,10 @@ const daily_rotate_file_transport = new transports.DailyRotateFile
   datePattern: 'YYYY-MM-DD'
 });
 
-const argv = validate_argv();
+const cfg = get_config();
 
 const logger = createLogger({
-  level: argv.log,
+  level: cfg.log_level,
   levels: {
     error: 0,
     warn: 1,
