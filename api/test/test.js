@@ -1,5 +1,4 @@
-const chai = require('chai');
-const assert = chai.assert;
+import { assert } from 'chai';
 
 describe('test group', () => {
     it('test one', () => {
