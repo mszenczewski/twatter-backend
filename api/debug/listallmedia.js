@@ -17,7 +17,7 @@ export default async function(req, res) {
 
     res.json(results);
   } catch (err) {
-    logger.ERROR('[LISTALLMEDIA] ' + err);
+    logger.error('[LISTALLMEDIA] ' + err);
     res.json({status: 'error', error: 'fatal'});
   }
 };

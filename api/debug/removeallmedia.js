@@ -10,10 +10,10 @@ import logger from '../logger.js';
 export default async function(req, res) {
   try {
     await Media.deleteMany({});
-    logger.INFO('[REMOVEALLMEDIA] all media removed');
+    logger.info('[REMOVEALLMEDIA] all media removed');
     res.json({status: 'OK'});
   } catch (err) {
-    logger.ERROR('[REMOVEALLMEDIA] ' + err);
+    logger.error('[REMOVEALLMEDIA] ' + err);
     res.json({status: 'error'});
   }
 };

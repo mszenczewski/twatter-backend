@@ -12,7 +12,7 @@ export default async function(req, res) {
     const results = await User.find({});
     res.json(results);
   } catch (err) {
-    logger.ERROR('[LISTALLUSERS] ' + err);
+    logger.error('[LISTALLUSERS] ' + err);
     res.json({status: 'error'});
   }
 };

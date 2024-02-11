@@ -11,7 +11,7 @@ import fs from 'fs';
  */
 export default function(req, res) {
   if (!req.session || !req.session.user) {
-    logger.WARN('[ADDMEDIA] user not logged in');
+    logger.warn('[ADDMEDIA] user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});
     return;
   }
@@ -19,15 +19,15 @@ export default function(req, res) {
   const form = new formidable.IncomingForm(); 
   form.parse(req, async function (err, fields, files) {
     if (err) {
-      logger.ERROR('[ADDMEDIA] ' + err);
+      logger.error('[ADDMEDIA] ' + err);
       return;
     }
 
-    logger.DEBUG('[ADDMEDIA] files: ' + JSON.stringify(files, null, 2));
+    logger.debug('[ADDMEDIA] files: ' + JSON.stringify(files, null, 2));
 
     const media = new Media();
 
-    media.id = Math.floor(Math.random() * Math.floor(100000000000000000));;
+    media.id = Math.floor(Math.random() * Math.floor(100000000000000000));
 
     media.content = {
       contentType: files.content.type,
@@ -44,9 +44,9 @@ export default function(req, res) {
     try {
       await media.save();
       fs.unlinkSync(files.content.path);
-      logger.INFO('[ADDMEDIA] media ' + media.id + ' added');
+      logger.info('[ADDMEDIA] media ' + media.id + ' added');
     } catch (err) {
-      logger.ERROR('[ADDMEDIA] ' + err); 
+      logger.error('[ADDMEDIA] ' + err); 
     }
   });
 };

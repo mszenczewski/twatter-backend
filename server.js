@@ -6,9 +6,6 @@ import session from 'client-sessions';
 import bodyParser from 'body-parser';
 import router from './api/routes.js';
 import validate_argv from './validate_argv.js';
-import './api/models/item.js'
-import './api/models/user.js'
-import './api/models/media.js'
 
 const argv = validate_argv();
 const app = express();

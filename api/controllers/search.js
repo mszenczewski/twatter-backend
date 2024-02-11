@@ -10,7 +10,7 @@ import logger from '../logger.js';
  * JSON: {timestamp:, limit:, q:, username:, following:} 
  */
 export default async function(req, res) {
-  logger.DEBUG('[SEARCH] received: ' + JSON.stringify(req.body, null, 2));
+  logger.debug('[SEARCH] received: ' + JSON.stringify(req.body, null, 2));
 
   const options = {};
 
@@ -60,7 +60,7 @@ export default async function(req, res) {
   //FOLLOWING
   if (req.body.following === true) {
     if (!req.session || !req.session.user) {
-        logger.WARN('[SEARCH] user not logged in');
+        logger.warn('[SEARCH] user not logged in');
         res.json({status: 'error', error: 'user not logged in'});
         return;
     }
@@ -69,7 +69,7 @@ export default async function(req, res) {
       const user = await User.findOne({username: req.session.user}, {following : 1});
 
       if (req.body.username && user.following.indexOf(req.body.username) === -1) {
-        logger.WARN('[SEARCH] searched for user not in following list');
+        logger.warn('[SEARCH] searched for user not in following list');
         res.json({status: 'OK', items: []});
         return;
       }
@@ -78,16 +78,16 @@ export default async function(req, res) {
         options.username = { $in: user.following };
       }
     } catch (err) {
-      logger.ERROR('[SEARCH] ' + err);
+      logger.error('[SEARCH] ' + err);
       res.status(500).json({status: 'error', error: 'fatal'});
     }
   }
 
   //SEARCH
   try {
-    logger.DEBUG('[SEARCH] options: ' + JSON.stringify(options, null, 2));
+    logger.debug('[SEARCH] options: ' + JSON.stringify(options, null, 2));
 
-    var results = await Item.find(options).limit(parseInt(limit));
+    let results = await Item.find(options).limit(parseInt(limit));
 
     //SORTING
     switch(req.body.rank) {
@@ -101,11 +101,11 @@ export default async function(req, res) {
 
     let json = {status: 'OK', items: results};
     
-    logger.INFO('[SEARCH] ' + json.items.length + ' results sent');
+    logger.info('[SEARCH] ' + json.items.length + ' results sent');
 
     res.send(json);
   } catch (err) {
-    logger.ERROR('[SEARCH] ' + err);
+    logger.error('[SEARCH] ' + err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

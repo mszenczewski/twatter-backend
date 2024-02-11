@@ -7,13 +7,13 @@ import logger from '../logger.js';
  * Returns true if the user is logged in
  */
 export default function(req, res) {
-  logger.DEBUG('[LOGGEDIN] received: ' + JSON.stringify(req.body));
+  logger.debug('[LOGGEDIN] received: ' + JSON.stringify(req.body));
   
   if (req.session && req.session.user) {
-    logger.DEBUG('[LOGGEDIN] user logged in');
+    logger.debug('[LOGGEDIN] user logged in');
     res.json({status: 'OK', loggedin: true});
   } else {
-    logger.DEBUG('[LOGGEDIN] user not logged in');
+    logger.debug('[LOGGEDIN] user not logged in');
     res.json({status: 'OK', loggedin: false});
   }
 };

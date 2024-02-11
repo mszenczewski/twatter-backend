@@ -14,10 +14,10 @@ export default async function(req, res) {
     await Item.deleteMany({});
     await User.deleteMany({});
     await Media.deleteMany({});
-    logger.INFO('[RESET] database reset');
+    logger.info('[RESET] database reset');
     res.json({status: 'OK'});
   } catch (err) {
-    logger.ERROR('[RESET]: ' + err);
+    logger.error('[RESET]: ' + err);
     res.json({status: 'error', error: 'fatal'});
   }
 };

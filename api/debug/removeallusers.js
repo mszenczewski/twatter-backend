@@ -10,10 +10,10 @@ import logger from '../logger.js';
 export default async function(req, res) {
   try {
     await User.deleteMany({});
-    logger.INFO('[REMOVEALLUSERS] all users removed');
+    logger.info('[REMOVEALLUSERS] all users removed');
     res.json({status: 'OK'});
   } catch (err) {
-    logger.ERROR('[REMOVEALLUSERS] ' + err);
+    logger.error('[REMOVEALLUSERS] ' + err);
     res.json({status: 'error'});
   }
 };

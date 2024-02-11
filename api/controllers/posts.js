@@ -8,8 +8,8 @@ import logger from '../logger.js';
  * Retrieves posts based on username
  */
 export default async function(req, res) {
-  logger.DEBUG('[POSTS] received: ' + JSON.stringify(req.params, null, 2));
-  logger.DEBUG('[POSTS] received: ' + JSON.stringify(req.query, null, 2));
+  logger.debug('[POSTS] received: ' + JSON.stringify(req.params, null, 2));
+  logger.debug('[POSTS] received: ' + JSON.stringify(req.query, null, 2));
 
   //LIMIT
   let limit = 50;
@@ -24,12 +24,12 @@ export default async function(req, res) {
     const results = await Item.find({'username': req.params.username}, {id : 1}).limit(parseInt(limit));
     const items = results.map(item => item.id);
 
-    logger.INFO('[POSTS] ' + items.length + ' results sent');
-    logger.DEBUG('[POSTS] ' + JSON.stringify(items, null, 2));
+    logger.info('[POSTS] ' + items.length + ' results sent');
+    logger.debug('[POSTS] ' + JSON.stringify(items, null, 2));
 
     res.send({status: 'OK', items: items});
   } catch (err) {
-    logger.ERROR('[POSTS] ' + err); 
+    logger.error('[POSTS] ' + err); 
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

@@ -12,7 +12,7 @@ export default async function(req, res) {
     const results = await Item.find({});
     res.json(results);
   } catch (err) {
-    logger.ERROR('[LISTALLITEMS] ' + err);
+    logger.error('[LISTALLITEMS] ' + err);
     res.json({status: 'error'});
   }
 };

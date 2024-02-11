@@ -8,13 +8,13 @@ import logger from '../logger.js';
  * Retrieves and item based on ID
  */
 export default async function(req, res) {
-  logger.DEBUG('[ITEM] received: ' + JSON.stringify(req.params));
+  logger.debug('[ITEM] received: ' + JSON.stringify(req.params));
 
   try {
     const item = await Item.findOne({'id': req.params.id});
 
     if (item === null) {
-      logger.WARN('[ITEM] item not found');
+      logger.warn('[ITEM] item not found');
       res.status(404).json({status: 'error', error: 'item not found'});
       return;
     }
@@ -33,11 +33,11 @@ export default async function(req, res) {
         }
     };
 
-    logger.INFO('[ITEM] ' + item.id + ' found');
+    logger.info('[ITEM] ' + item.id + ' found');
     res.status(200).send(json);
 
   } catch (err) {
-    logger.ERROR('[ITEM] ' + err);
+    logger.error('[ITEM] ' + err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

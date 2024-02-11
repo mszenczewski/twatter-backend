@@ -7,14 +7,14 @@ import logger from '../logger.js';
  * Logs user out
  */
 export default function(req, res) {
-  logger.DEBUG('[LOGOUT] received: ' + JSON.stringify(req.body));
+  logger.debug('[LOGOUT] received: ' + JSON.stringify(req.body));
 
   if (!req.session || !req.session.user) {
-    logger.WARN('[LOGOUT] user not logged in');
+    logger.warn('[LOGOUT] user not logged in');
     res.json({status: 'error', error: 'user not logged in'});
     return;
   }
-  logger.INFO('[LOGOUT] ' + req.session.user + ' logged out');
+  logger.info('[LOGOUT] ' + req.session.user + ' logged out');
   req.session.reset();
   res.json({status: 'OK'});
 };

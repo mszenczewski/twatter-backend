@@ -9,10 +9,10 @@ import logger from '../logger.js';
  * Removes a 'tweet' from database
  */
 export default async function(req, res) {
-  logger.DEBUG('[DELETE] received: ' + JSON.stringify(req.params));
+  logger.debug('[DELETE] received: ' + JSON.stringify(req.params));
 
   if (!req.session || !req.session.user) {
-    logger.WARN('[DELETE] user not logged in');
+    logger.warn('[DELETE] user not logged in');
     res.status(403).json({status: 'error', error: 'user not logged in'});
     return;
   }
@@ -21,35 +21,35 @@ export default async function(req, res) {
     const item = await Item.findOne({'id': req.params.id}, {username : 1, media : 1});
 
     if (item === null) {
-      logger.ERROR('[WARN]: item not found');
+      logger.error('[WARN]: item not found');
       res.status(404).json({status: 'error', error: 'item not found'});
       return;
     }
 
     if (item.username !== req.session.user) {
-      logger.WARN('[DELETE]: user not authorized to delete this item');
+      logger.warn('[DELETE]: user not authorized to delete this item');
       res.status(403).json({status: 'error', error: 'user not authorized to delete this item'});
       return;
     }
 
     if (item.username !== req.session.user) {
-      logger.WARN('[DELETE]: user not authorized to delete this item');
+      logger.warn('[DELETE]: user not authorized to delete this item');
       res.status(403).json({status: 'error', error: 'user not authorized to delete this item'});
       return;
     }
 
     if (item.media) {
       await Media.deleteMany({id: {$in: item.media}});
-      logger.INFO('[DELETE] media ' + item.media + ' removed');
+      logger.info('[DELETE] media ' + item.media + ' removed');
     }
 
     await Item.deleteOne({id: req.params.id});
 
-    logger.INFO('[DELETE] ' + req.params.id + ' removed');
+    logger.info('[DELETE] ' + req.params.id + ' removed');
     res.status(200).json({status: 'OK'});
 
   } catch (err) {
-    logger.ERROR('[DELETE]: ' + err);
+    logger.error('[DELETE]: ' + err);
     res.status(500).json({status: 'error', error: 'fatal'});
   }
 };
