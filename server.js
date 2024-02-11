@@ -4,7 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import session from 'client-sessions';
 import bodyParser from 'body-parser';
-import router from './api/routes.js';
+import router from './api/router.js';
 import validate_argv from './validate_argv.js';
 
 const argv = validate_argv();
