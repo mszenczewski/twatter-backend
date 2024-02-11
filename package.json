@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive --timeout 5000",
     "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "chai": "^5.0.3",
+    "@types/chai": "^4.3.11",
+    "@types/chai-http": "^4.2.0",
+    "chai": "^4.4.1",
     "chai-http": "^4.4.0",
-    "mocha": "^10.3.0",
+    "mocha": "^10.2.0",
     "nodemon": "^3.0.3"
   },
   "dependencies": {
