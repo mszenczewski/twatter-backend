@@ -5,8 +5,8 @@ import logger_child from '../logger.js';
 
 const logger = logger_child('login');
 
-/** 
- * LOGIN 
+/**
+ * LOGIN
  * Logs user in
  * JSON: { username:, password: }
  */

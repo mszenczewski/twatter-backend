@@ -36,7 +36,7 @@ const UserSchema = new Schema({
   },
   liked: {
     type: Array,
-    default: [] 
+    default: []
   }
 }, {shardKey: {username: 1}});
 

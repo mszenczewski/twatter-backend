@@ -23,7 +23,7 @@ export default async function(req, res) {
 
     logger.info(`${media.id} found`);
 
-    res.writeHead(200, {'Content-Type': media.content.contentType});        
+    res.writeHead(200, {'Content-Type': media.content.contentType});
     res.end(media.content.data);
 
   } catch (err) {

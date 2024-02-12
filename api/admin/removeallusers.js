@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('removeallusers');
 
 /**
- * REMOVE ALL USERS 
+ * REMOVE ALL USERS
  * Removes all users from database
  */
 export default async function(req, res) {

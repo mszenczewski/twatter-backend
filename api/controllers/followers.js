@@ -27,7 +27,7 @@ export default async function(req, res) {
 
     if (user === null) {
       logger.error('user does not exist');
-      res.status(404).json({status: 'error', error: 'user does not exist'}); 
+      res.status(404).json({status: 'error', error: 'user does not exist'});
       return;
     }
 

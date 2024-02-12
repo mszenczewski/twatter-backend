@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('verify');
 
 /**
- * VERIFY USER 
+ * VERIFY USER
  * Verifies email with randomly generated key
  * JSON: { email:, key: }
  */
@@ -53,6 +53,6 @@ export default async function(req, res) {
     res.status(200).json({status: 'OK'});
   } catch (err) {
     logger.error(err);
-    res.status(500).json({status: 'error', error: 'fatal'}); 
+    res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

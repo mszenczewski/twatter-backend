@@ -10,7 +10,7 @@ const logger = logger_child('loggedin');
  */
 export default function(req, res) {
   logger.debug('received: ' + JSON.stringify(req.body));
-  
+
   if (req.session && req.session.user) {
     logger.debug('user logged in');
     res.json({status: 'OK', loggedin: true});

@@ -8,7 +8,7 @@ const logger = logger_child('follow');
 /**
  * FOLLOW
  * Follows another user
- * JSON: {username:, follow: } 
+ * JSON: {username:, follow: }
  */
 export default async function(req, res) {
   logger.debug('received: ' + JSON.stringify(req.body, null, 2));

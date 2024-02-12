@@ -37,6 +37,6 @@ export default async function(req, res) {
 
   } catch (err) {
     logger.error(err);
-    res.status(500).json({status: 'error', error: 'fatal'}); 
+    res.status(500).json({status: 'error', error: 'fatal'});
   }
 };

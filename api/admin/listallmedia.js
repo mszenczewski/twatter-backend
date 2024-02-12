@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('listallmedia');
 
 /**
- * LIST ALL MEDIA 
+ * LIST ALL MEDIA
  * Returns all media in the database
  */
 export default async function(req, res) {

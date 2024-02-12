@@ -18,7 +18,7 @@ export default function(req, res) {
     return;
   }
 
-  const form = new formidable.IncomingForm(); 
+  const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     if (err) {
       logger.error(err);
@@ -35,7 +35,7 @@ export default function(req, res) {
       contentType: files.content.type,
       data: fs.readFileSync(files.content.path)
     }
-    
+
     media.by = {
       username: req.session.user,
       tweetid: null

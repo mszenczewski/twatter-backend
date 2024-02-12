@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('listallitems');
 
 /**
- * LIST ALL ITEMS 
+ * LIST ALL ITEMS
  * Returns all 'tweets' in the database
  */
 export default async function(req, res) {

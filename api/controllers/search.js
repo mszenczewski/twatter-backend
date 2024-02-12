@@ -9,7 +9,7 @@ const logger = logger_child('search');
 /**
  * SEARCH
  * Searches the database for 'tweets'
- * JSON: {timestamp:, limit:, q:, username:, following:} 
+ * JSON: {timestamp:, limit:, q:, username:, following:}
  */
 export default async function(req, res) {
   logger.debug('received: ' + JSON.stringify(req.body, null, 2));
@@ -20,9 +20,9 @@ export default async function(req, res) {
   if (!req.body.timestamp) {
     let d = new Date();
     let t = d.getTime() / 1000;
-    options.timestamp = { $lte: t }; 
+    options.timestamp = { $lte: t };
   } else {
-    options.timestamp = { $lte: req.body.timestamp }; 
+    options.timestamp = { $lte: req.body.timestamp };
   }
 
   //LIMIT
@@ -102,7 +102,7 @@ export default async function(req, res) {
     }
 
     let json = {status: 'OK', items: results};
-    
+
     logger.info(`${json.items.length} results sent`);
 
     res.send(json);

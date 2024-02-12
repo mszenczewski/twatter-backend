@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('removeallmedia');
 
 /**
- * REMOVE ALL MEDIA 
+ * REMOVE ALL MEDIA
  * Removes all media from database
  */
 export default async function(req, res) {

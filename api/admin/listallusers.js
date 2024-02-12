@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('listallusers');
 
 /**
- * LIST ALL USERS 
+ * LIST ALL USERS
  * Returns all users in the database
  */
 export default async function(req, res) {

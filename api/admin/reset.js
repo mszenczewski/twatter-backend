@@ -8,7 +8,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('reset');
 
 /**
- * RESET 
+ * RESET
  * Resets the database
  */
 export default async function(req, res) {

@@ -22,7 +22,7 @@ export default async function(req, res) {
     }
 
     const json = {
-      status: 'OK', 
+      status: 'OK',
       item: {
         content: item.content,
         id: item.id,

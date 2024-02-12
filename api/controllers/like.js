@@ -26,7 +26,7 @@ export default async function(req, res) {
     var item_update = {$inc: {'property.likes': -1}};
     var user_update = {$pull: {liked: req.params.id}};
   }
-  
+
   try {
     const user = await User.findOne({username: req.session.user}, {username : 1, liked : 1});
 

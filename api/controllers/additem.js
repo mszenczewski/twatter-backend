@@ -9,7 +9,7 @@ const logger = logger_child('additem');
 /**
  * ADD ITEM
  * Adds a 'tweet' to the database
- * JSON: {content: childType: parent: media:} 
+ * JSON: {content: childType: parent: media:}
  */
 export default async function(req, res) {
   logger.debug('received: ' + JSON.stringify(req.body, null, 2));
@@ -20,7 +20,7 @@ export default async function(req, res) {
     return;
   }
 
-  if (!req.body.content) { 
+  if (!req.body.content) {
     logger.warn('no content');
     res.status(400).json({status: 'error', error: 'no content'});
     return;
@@ -50,19 +50,19 @@ export default async function(req, res) {
           logger.warn('media already has a tweet associated with it');
           res.status(403).json({status: 'error', error: 'media already has a tweet associated with it'});
           return;
-        } 
+        }
         if (results[i].by.username !== req.session.user) {
           logger.warn('media does not belong to user');
           res.status(403).json({status: 'error', error: 'media does not belong to user'});
           return;
-        } 
+        }
       }
     } catch (err) {
       logger.error(err);
       res.status(500).json({status: 'error', error: 'fatal'});
       return;
     }
-  } 
+  }
 
   const temp = {
     id: Math.floor(Math.random() * Math.floor(100000000000000000)),
@@ -84,14 +84,14 @@ export default async function(req, res) {
 
   try {
     const item = await Item.create(temp);
-    
+
     if (req.body.media) {
       for (let i = 0; i < req.body.media.length; i++) {
         await Media.findOneAndUpdate({id: req.body.media[i]}, {'by.tweetid': item.id});
       }
     }
 
-    res.status(200).json({status: 'OK', id: temp.id}); 
+    res.status(200).json({status: 'OK', id: temp.id});
     logger.info(`item ${item.id} added`);
   } catch (err) {
     logger.error(err);

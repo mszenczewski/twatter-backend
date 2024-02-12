@@ -6,7 +6,7 @@ import logger_child from '../logger.js';
 const logger = logger_child('removeallitems');
 
 /**
- * REMOVE ALL ITEMS 
+ * REMOVE ALL ITEMS
  * Removes all 'tweets' from database
  */
 export default async function(req, res) {
