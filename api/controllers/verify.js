@@ -40,7 +40,7 @@ export default async function(req, res) {
       return;
     }
 
-    if(user.key != req.body.key && req.body.key !== 'abracadabra'){
+    if(user.key !== req.body.key && req.body.key !== 'abracadabra'){
       logger.warn('incorrect key');
       res.status(403).json({status: 'error', error: 'incorrect key'});
       return;
