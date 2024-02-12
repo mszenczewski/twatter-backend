@@ -34,7 +34,7 @@ export default async function(req, res) {
       return;
     }
 
-    if (user.verified != true) {
+    if (user.verified !== true) {
       logger.warn('user not verified');
       res.status(403).json({status: 'error', error: 'user not verified'});
       return;
