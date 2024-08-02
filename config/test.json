@@ -1,6 +1,6 @@
 {
   "port": 8080,
-  "log_level": "debug",
+  "log_level": "error",
   "mongodb": {
     "url": "localhost",
     "port": 27017,

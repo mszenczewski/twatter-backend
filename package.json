@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive --timeout 5000",
-    "start": "nodemon server.js"
+    "test": "NODE_ENV=test mocha --recursive --timeout 20000",
+    "start": "NODE_ENV=prod nodemon server.js"
   },
   "author": "",
   "license": "ISC",

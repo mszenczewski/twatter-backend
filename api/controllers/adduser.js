@@ -36,23 +36,8 @@ export default async function(req, res) {
 
   const random_key = Math.floor(Math.random() * Math.floor(100000000000000000));
 
-  const mail_options = {
-    from: 'no-reply@gaillardia.cse356.compas.cs.stonybrook.edu',
-    to: req.body.email,
-    subject: 'verification email',
-    text: 'validation key: <' + random_key + '>'
-  };
-
-  const transporter = nodemailer.createTransport({
-    host: cfg.postfix.url,
-    port: cfg.postfix.port,
-    secure: false,
-    tls:{rejectUnauthorized: false}
-  });
-
   try {
-    //ADD USER
-    const u = await User.findOne({'username': req.body.username}, {username : 1});
+    const u = await User.findOne({'username': req.body.username}, {username : 1}, null).exec();
 
     if (u !== null) {
       logger.warn('user already exists');
@@ -60,12 +45,12 @@ export default async function(req, res) {
       return;
     }
 
-    const user = new User();
-
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    user.key = random_key;
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      key: random_key
+    });
 
     await user.save();
 
@@ -74,13 +59,38 @@ export default async function(req, res) {
 
     res.status(200).json({status: 'OK'});
 
-    //SEND EMAIL
+    if (process.env.NODE_ENV !== 'test') {
+      send_email(req.body.email, random_key).then();
+    }
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
+async function send_email(email, random_key) {
+  try {
+    const mail_options = {
+      from: 'no-reply@gaillardia.cse356.compas.cs.stonybrook.edu',
+      to: email,
+      subject: 'verification email',
+      text: 'validation key: <' + random_key + '>'
+    };
+
+    const transporter = nodemailer.createTransport({
+      host: cfg.postfix.url,
+      port: cfg.postfix.port,
+      secure: false,
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+
     const info = await transporter.sendMail(mail_options);
 
     const tmp = info.response.split(' ');
     const code = tmp[0];
 
-    if (code.charAt(0) != 2 ) {
+    if (code.charAt(0) !== 2) {
       logger.error(JSON.stringify(info, null, 2));
     } else {
       logger.info('email sent to ' + mail_options.to);
@@ -88,4 +98,4 @@ export default async function(req, res) {
   } catch (err) {
     logger.error(err);
   }
-};
+}
