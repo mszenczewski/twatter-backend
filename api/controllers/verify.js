@@ -26,7 +26,7 @@ export default async function(req, res) {
   }
 
   try {
-    const user = await User.findOne({email: req.body.email}, {username: 1, verified : 1, key : 1, email : 1});
+    const user = await User.findOne({email: req.body.email}, 'username verified key email', null).exec();
 
     if(user === null || user === undefined || user.email !== req.body.email) {
       logger.warn('user not found');
