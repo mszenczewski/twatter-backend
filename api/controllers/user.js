@@ -13,7 +13,12 @@ export default async function(req, res) {
   logger.debug('received: ' + JSON.stringify(req.params));
 
   try {
-    const u = await User.findOne({'username': req.params.username}, {username : 1, email : 1, followers : 1, following : 1});
+    const u = await User.findOne({'username': req.params.username}, {
+      username: 1,
+      email: 1,
+      followers: 1,
+      following: 1
+    }, null).exec();
 
     if (u === null) {
       logger.warn('user not found');
@@ -25,8 +30,8 @@ export default async function(req, res) {
       status: 'OK',
       user: {
         email: u.email,
-        followers: u.followers.length,
-        following: u.following.length
+        followers: u.followers,
+        following: u.following
       }
     }
 
