@@ -12,7 +12,7 @@ const logger = logger_child('listallitems');
 export default async function(req, res) {
   try {
     logger.debug('listing all items');
-    const results = await Item.find({});
+    const results = await Item.find({}, null, null).exec();
     res.json(results);
   } catch (err) {
     logger.error(err);

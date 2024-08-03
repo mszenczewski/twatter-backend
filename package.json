@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --recursive --timeout 20000",
+    "test": "NODE_ENV=test mocha --recursive --timeout 20000 --exit",
     "start": "NODE_ENV=prod nodemon server.js"
   },
   "author": "",
