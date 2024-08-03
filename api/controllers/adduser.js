@@ -70,7 +70,7 @@ export default async function(req, res) {
 async function send_email(email, random_key) {
   try {
     const mail_options = {
-      from: 'no-reply@gaillardia.cse356.compas.cs.stonybrook.edu',
+      from: 'no-reply@example.com',
       to: email,
       subject: 'verification email',
       text: 'validation key: <' + random_key + '>'
