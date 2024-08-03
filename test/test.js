@@ -55,6 +55,7 @@ describe('admin tests', () => {
         assert.isArray(text);
         assert.isEmpty(text);
     });
+    
     it('remove all users', async () => {
         //add user_0
         text = await send_post('/adduser', 200, user_0);
