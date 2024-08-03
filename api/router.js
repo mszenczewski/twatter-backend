@@ -59,11 +59,11 @@ export default function router(app) {
     app.route('/item/:id/like').post(like);
 
     //ADMIN
-    app.route('/listallitems').post(listallitems);
-    app.route('/listallusers').post(listallusers);
-    app.route('/listallmedia').post(listallmedia);
-    app.route('/removeallitems').post(removeallitems);
-    app.route('/removeallusers').post(removeallusers);
-    app.route('/removeallmedia').post(removeallmedia);
-    app.route('/reset').post(reset);
+    app.route('/listallitems').get(listallitems);
+    app.route('/listallusers').get(listallusers);
+    app.route('/listallmedia').get(listallmedia);
+    app.route('/removeallitems').delete(removeallitems);
+    app.route('/removeallusers').delete(removeallusers);
+    app.route('/removeallmedia').delete(removeallmedia);
+    app.route('/reset').delete(reset);
 };
