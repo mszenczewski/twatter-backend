@@ -12,13 +12,10 @@ const logger = logger_child('listallmedia');
 export default async function(req, res) {
   try {
     logger.debug('listing all media');
-
-    const results = await Media.find({});
-
+    const results = await Media.find({}, null, null).exec();
     for (let i = 0; i < results.length; i++) {
       results[i].content.data = null;
-    }
-
+    }  //TODO add real data handling
     res.json(results);
   } catch (err) {
     logger.error(err);

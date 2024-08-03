@@ -12,7 +12,7 @@ const logger = logger_child('listallusers');
 export default async function(req, res) {
   try {
     logger.debug('getting all users');
-    const results = await User.find({});
+    const results = await User.find({}, null, null).exec();
     res.json(results);
   } catch (err) {
     logger.error(err);
